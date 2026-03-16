@@ -5,7 +5,7 @@ app = Flask(__name__)
 @app.route("/")
 def hello_world():
     return render_template('index.html')
-    #return "Function added successfully"
+    
     #return "<p>Hello, World!</p>"
 
 @app.route('/products')
