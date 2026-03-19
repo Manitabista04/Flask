@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request , redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -10,7 +10,7 @@ class Todo(db.Model):
     sno = db.Column(db.Integer , primary_key= True)
     title = db.Column(db.String(200), nullable= False)
     desc = db.Column(db.String(500), nullable= False)
-    date_created = db.Column(db.DateTime)
+    date_created = db.Column(db.DateTime, default= datetime.utcnow)
 
     def __repr__(self):
         return f"{self.sno} - {self.title}"
@@ -25,7 +25,6 @@ def hello_world():
         db.session.commit()
         
     allTodo = Todo.query.all()
-    print(allTodo)
     return render_template('index.html' , allTodo = allTodo)
     
 
@@ -35,8 +34,19 @@ def products():
     print(allTodo)
     return 'this is a products page'
 
-with app.app_context():
-    db.create_all()
+@app.route('/update')
+def update():
+    allTodo = Todo.query.all()
+    print(allTodo)
+    return 'this is a products page'
+
+@app.route('/delete/<int:sno>')
+def delete(sno):
+    todo = Todo.query.filter_by(sno = sno).first()
+    db.session.delete(todo)
+    db.session.commit()
+    return redirect("/")
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
