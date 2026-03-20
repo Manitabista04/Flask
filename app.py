@@ -26,18 +26,12 @@ def hello_world():
         
     allTodo = Todo.query.all()
     return render_template('index.html' , allTodo = allTodo)
+   
     
-
-@app.route('/show')
-def products():
-    allTodo = Todo.query.all()
-    print(allTodo)
-    return 'this is a products page'
-
 @app.route('/update')
 def update():
     allTodo = Todo.query.all()
-    print(allTodo)
+    print(type(allTodo))
     return 'this is a products page'
 
 @app.route('/delete/<int:sno>')
@@ -46,6 +40,17 @@ def delete(sno):
     db.session.delete(todo)
     db.session.commit()
     return redirect("/")
+
+@app.route('/search/<string:title>')
+def search(title):
+    todo = Todo.query.filter_by(title = title).first()
+    db.session.commit()
+
+    if todo is None:
+        return render_template('index.html', allTodo = [])
+    else:
+        return render_template('index.html', allTodo = [todo])
+    
 
 
 if __name__ == "__main__":

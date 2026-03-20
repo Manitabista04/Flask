@@ -34,28 +34,6 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Link</a>
             </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Dropdown
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-            </li>
           </ul>
           <form class="d-flex" role="search">
             <input
@@ -63,10 +41,27 @@
               type="search"
               placeholder="Search"
               aria-label="Search"
+              id="searchInput"
+
             />
-            <button class="btn btn-outline-success" type="submit">
-              Search
-            </button>
+            <button style="border: none;">
+              <a id="submitbtn" class="btn btn-outline-dark" type="button" >
+                Search
+              </a>
+
+                <script>
+
+                  submit= document.getElementById('submitbtn')
+                  search= document.getElementById('searchInput')
+
+                  search.addEventListener('change',()=>{
+                    submit.href= "/search/" + search.value
+                  })
+
+                  
+                </script>
+              </button>
+         
           </form>
         </div>
       </div>
@@ -82,13 +77,17 @@
   <label for="desc" class="form-label">ToDo Description</label>
   <input type="text" class="form-control" name="desc" id="desc">
 </div>
-  <button type="submit" class="btn btn-dark">Submit</button>
+  <button type="submit" class="btn btn-dark mb-2">Submit</button>
   </form>
     </div>
+    <h5 style="margin-left: 118px;"> Your Todo items</h5>
+    
     <div class="container">
       
     {% if allTodo|length ==0 %}
-      no record
+      <div class="alert alert-dark" role="alert">
+        No todo added. Please add your first todo!
+      </div>
       
     {% else %}
         <table class="table">
