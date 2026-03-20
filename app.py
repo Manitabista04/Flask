@@ -28,11 +28,10 @@ def hello_world():
     return render_template('index.html' , allTodo = allTodo)
    
     
-@app.route('/update')
-def update():
-    allTodo = Todo.query.all()
-    print(type(allTodo))
-    return 'this is a products page'
+@app.route('/update/<int:sno>')
+def update(sno):
+    todo = Todo.query.filter_by(sno = sno).first()
+    return render_template('update.html' , todo = todo)
 
 @app.route('/delete/<int:sno>')
 def delete(sno):
@@ -49,9 +48,7 @@ def search(title):
     if todo is None:
         return render_template('index.html', allTodo = [])
     else:
-        return render_template('index.html', allTodo = [todo])
-    
-
+        return render_template('index.html', allTodo = [todo])  
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
