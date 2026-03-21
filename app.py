@@ -28,8 +28,18 @@ def hello_world():
     return render_template('index.html' , allTodo = allTodo)
    
     
-@app.route('/update/<int:sno>')
+@app.route('/update/<int:sno>' , methods=['GET','POST'])
 def update(sno):
+    if request.method == 'POST':
+         title =request.form['title']
+         desc = request.form['desc']
+         todo = Todo.query.filter_by(sno = sno).first()
+         todo.title =title
+         todo.desc = desc
+         db.session.add(todo)
+         db.session.commit()
+         return redirect("/")
+
     todo = Todo.query.filter_by(sno = sno).first()
     return render_template('update.html' , todo = todo)
 

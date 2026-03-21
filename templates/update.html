@@ -4,7 +4,7 @@
    
     <div class="container">
       <h2>Update your Todo</h2>
-      <form action="/" method="POST">
+      <form action="/update/{{todo.sno}}" method="POST">
       <div class="mb-3">
   <label for="title" class="form-label">ToDo Title</label>
   <input type="text" class="form-control" name="title" id="title" value="{{todo.title}}">
